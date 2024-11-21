@@ -75,6 +75,8 @@ class Search extends StatelessWidget {
                       title: controller.searchList[index].title,
                       description: controller.searchList[index].description,
                       price: controller.searchList[index].price,
+                      id: controller.searchList[index].id,
+                      index: index,
                     );
                   },
                 )
@@ -87,6 +89,8 @@ class Search extends StatelessWidget {
                       title: controller.categorySearchList[index].title,
                       description: controller.categorySearchList[index].description,
                       price: controller.categorySearchList[index].price,
+                      id: controller.searchList[index].id,
+                      index: index,
                     );
                   },
                 )

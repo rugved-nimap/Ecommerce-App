@@ -35,4 +35,17 @@ class DataFetchRepo {
       return [];
     }
   }
+
+  Future<Productmodel?> fetchProductDetails(String endUrl) async {
+    final url = Uri.parse(_baseurl + endUrl);
+    try {
+      final response = await http.get(url);
+      Map<String, dynamic> data = jsonDecode(response.body);
+      Productmodel details = Productmodel.fromJson(data);
+      return details;
+    } catch (e) {
+      print('Error: $e');
+      return null;
+    }
+  }
 }

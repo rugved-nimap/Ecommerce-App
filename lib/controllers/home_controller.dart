@@ -1,6 +1,7 @@
 import 'package:ecommerce/models/productModel.dart';
 import 'package:ecommerce/models/sqf_model.dart';
 import 'package:ecommerce/repository/data_fetch_repo.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,21 +11,25 @@ class HomeController extends GetxController {
   int currentPageIndex = 0;
   PageController pageController = PageController();
   bool isDarkMode = false;
+  int selectedProductId = 0;
 
   final DataFetchRepo _dataFetchRepo = DataFetchRepo();
-  final DatabaseService databaseService = DatabaseService.instance;
+  final DatabaseService _databaseService = DatabaseService.instance;
 
   List<Productmodel> productData = [];
 
   List<Productmodel> wisListProducts = [];
   List<Productmodel> shoppingProducts = [];
+  // bool isWishList = false;
 
   @override
   void onInit() {
     fetchData();
     super.onInit();
     isDarkMode = Get.isDarkMode;
-    print("$isDarkMode  ======  ${Get.isDarkMode}");
+    if (kDebugMode) {
+      print("$isDarkMode  ======  ${Get.isDarkMode}");
+    }
   }
 
   void changePage(int index) {
@@ -47,22 +52,36 @@ class HomeController extends GetxController {
     try {
       productData = await _dataFetchRepo.fetchData("products");
     } catch (e) {
-      print("Error $e");
+      debugPrint("Error $e");
     }
     update();
   }
 
+  void addToWishList(int index) async {
+    bool isInWishList = isWishList(index);
+
+    if (isInWishList) {
+      wisListProducts.remove(productData[index]);
+    } else {
+      wisListProducts.add(productData[index]);
+    }
+    update();
+  }
+
+  bool isWishList(int index) {
+    return wisListProducts.any((product) => product.id == productData[index].id);
+  }
+
+
   void getDatabaseData() async {
-    List<SqfModel> wishList = await databaseService.getList(
-      databaseService.database2,
-      databaseService.wishListTableName,
+    List<SqfModel> wishList = await _databaseService.getList(
+      _databaseService.database2,
+      _databaseService.wishListTableName,
     );
 
-
-
-    List<SqfModel> shoppingList = await databaseService.getList(
-      databaseService.database1,
-      databaseService.shoppingTableName,
+    List<SqfModel> shoppingList = await _databaseService.getList(
+      _databaseService.database1,
+      _databaseService.shoppingTableName,
     );
   }
 }

@@ -136,6 +136,8 @@ class HomePage extends StatelessWidget {
                       title: controller.productData[index].title,
                       description: controller.productData[index].description,
                       price: controller.productData[index].price,
+                      id: controller.productData[index].id,
+                      index: index,
                     );
                   },
                 )

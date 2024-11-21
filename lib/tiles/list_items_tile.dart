@@ -1,19 +1,25 @@
+import 'package:ecommerce/binders/product_detail_binder.dart';
+import 'package:ecommerce/controllers/home_controller.dart';
 import 'package:ecommerce/pages/product_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListItemsTile extends StatelessWidget {
-  String thumbnail;
-  String title;
-  String description;
-  double price;
+  final String thumbnail;
+  final String title;
+  final String description;
+  final double price;
+  final int id;
+  final int index;
 
-  ListItemsTile({
+  const ListItemsTile({
     super.key,
     required this.thumbnail,
     required this.title,
     required this.description,
     required this.price,
+    required this.id,
+    required this.index,
   });
 
   @override
@@ -23,10 +29,14 @@ class ListItemsTile extends StatelessWidget {
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       child: ElevatedButton(
-        onPressed: () => Get.to(
-          const ProductDetail(),
-          transition: Transition.zoom,
-        ),
+        onPressed: () {
+          Get.find<HomeController>().selectedProductId = id;
+          Get.to(
+            const ProductDetail(),
+            binding: ProductDetailBinder(),
+            transition: Transition.zoom,
+          );
+        },
         style: ButtonStyle(
           shape: WidgetStatePropertyAll(
             RoundedRectangleBorder(
@@ -94,10 +104,12 @@ class ListItemsTile extends StatelessWidget {
             Flexible(
               flex: 1,
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.find<HomeController>().addToWishList(index);
+                },
                 icon: Icon(
-                  Icons.favorite_border_rounded,
-                  color: Theme.of(context).primaryColor,
+                  Get.find<HomeController>().isWishList(index) ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                  color: Get.find<HomeController>().isWishList(index) ? Colors.redAccent : Theme.of(context).primaryColor,
                 ),
               ),
             ),
