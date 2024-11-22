@@ -22,9 +22,7 @@ class Home extends StatelessWidget {
             itemCount: 4,
             itemBuilder: (context, index) {
               if (index == 0) {
-                return HomePage(
-                  controller: controller,
-                );
+                return const HomePage();
               } else if (index == 1) {
                 return const WishlistPage();
               } else if (index == 2) {

@@ -9,45 +9,51 @@ import '../services/database_service.dart';
 class ProductDetailController extends GetxController {
   final DataFetchRepo _dataFetchRepo = DataFetchRepo();
   final DatabaseService _databaseService = DatabaseService.instance;
+  bool isLoading = true;
   bool isWishList = false;
   bool isAddCart = false;
 
-  Productmodel? productData;
+  late Productmodel productData;
   final HomeController _controller = Get.find<HomeController>();
 
   @override
   void onInit() {
-    getDataOfProduct(Get.find<HomeController>().selectedProductId);
+    getDataOfProduct(Get.arguments['id']);
+    isWishList = _controller.wisListProducts
+        .any((product) => product.id == Get.arguments['id']);
     super.onInit();
   }
 
   void getDataOfProduct(int id) async {
+    isLoading = true;
     try {
-      productData = await _dataFetchRepo.fetchProductDetails("products/$id");
+      productData = (await _dataFetchRepo.fetchProductDetails("products/$id"))!;
     } catch (e) {
       debugPrint("Error $e");
     }
+    isLoading = false;
     update();
   }
 
-  void addToWishList() async {
+  void addToWishList() {
     isWishList = !isWishList;
+    debugPrint(isWishList.toString());
     if (isWishList) {
-      _controller.wisListProducts.add(productData!);
+      _controller.wisListProducts.add(productData);
     } else {
-      _controller.wisListProducts.remove(productData!);
+      _controller.wisListProducts.removeWhere((element) => element.id == productData.id);
     }
     update();
   }
 
-  void addToCart() async {
+  void addToCart() {
     isAddCart = !isAddCart;
     if (isAddCart) {
-      _controller.shoppingProducts.add(productData!);
+      _controller.shoppingProducts.add(productData);
     } else {
-      _controller.shoppingProducts.remove(productData!);
+      _controller.shoppingProducts.removeWhere((element) => element.id == productData.id);
     }
+    print("${_controller.shoppingProducts[0].title}");
     update();
   }
-
 }

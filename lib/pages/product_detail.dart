@@ -11,27 +11,45 @@ class ProductDetail extends StatelessWidget {
     return GetBuilder<ProductDetailController>(
       builder: (controller) {
         return Scaffold(
-          body: controller.productData != null
+          body: !controller.isLoading
               ? SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      Container(
                         width: double.infinity,
                         height: 90,
-                        child: Marquee(
-                          text:
-                              "${controller.productData!.category[0].toUpperCase()}${controller.productData!.category.substring(1).toLowerCase()} Products",
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 30,
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.bold,
-                          ),
-                          pauseAfterRound: const Duration(seconds: 1),
-                          blankSpace: 150,
-                          startPadding: 10,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                        margin: const EdgeInsets.only(top: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                            Expanded(
+                              child: Marquee(
+                                text:
+                                    "${controller.productData.category[0].toUpperCase()}${controller.productData.category.substring(1).toLowerCase()} Products",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 30,
+                                  fontFamily: "Poppins",
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                pauseAfterRound: const Duration(seconds: 1),
+                                blankSpace: 150,
+                                startPadding: 10,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Container(
@@ -39,10 +57,10 @@ class ProductDetail extends StatelessWidget {
                         width: double.infinity,
                         margin: const EdgeInsets.only(bottom: 15),
                         child: PageView.builder(
-                          itemCount: controller.productData?.images.length,
+                          itemCount: controller.productData.images.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Image.network(
-                              controller.productData?.images[index],
+                              controller.productData.images[index],
                               fit: BoxFit.contain,
                               loadingBuilder:
                                   (context, child, loadingProgress) {
@@ -86,7 +104,7 @@ class ProductDetail extends StatelessWidget {
                               ],
                             ),
                             Text(
-                              controller.productData!.rating.toString(),
+                              controller.productData.rating.toString(),
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 20,
@@ -101,7 +119,7 @@ class ProductDetail extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 5),
                         child: Text(
-                          controller.productData!.title,
+                          controller.productData.title,
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 22,
@@ -114,7 +132,7 @@ class ProductDetail extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 5),
                         child: Text(
-                          controller.productData!.description,
+                          controller.productData.description,
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 12,
@@ -132,7 +150,7 @@ class ProductDetail extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              "\$${controller.productData!.price}",
+                              "\$${controller.productData.price}",
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 22,
@@ -144,7 +162,7 @@ class ProductDetail extends StatelessWidget {
                               width: 10,
                             ),
                             Text(
-                              "-${controller.productData!.discountPercentage}%",
+                              "-${controller.productData.discountPercentage}%",
                               style: const TextStyle(
                                   color: Colors.lightGreen,
                                   fontSize: 12,
@@ -162,7 +180,7 @@ class ProductDetail extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              "\$${(controller.productData!.price / (1 - controller.productData!.discountPercentage / 100)).toStringAsFixed(2)}",
+                              "\$${(controller.productData.price / (1 - controller.productData.discountPercentage / 100)).toStringAsFixed(2)}",
                               style: TextStyle(
                                   color: Theme.of(context).primaryColorDark,
                                   fontSize: 22,
@@ -191,7 +209,7 @@ class ProductDetail extends StatelessWidget {
                               ),
                             ),
                             ...List.generate(
-                              controller.productData!.tags.length,
+                              controller.productData.tags.length,
                               (index) {
                                 return Container(
                                   padding: const EdgeInsets.symmetric(
@@ -202,23 +220,24 @@ class ProductDetail extends StatelessWidget {
                                         Colors.grey.shade800.withOpacity(0.25),
                                   ),
                                   child:
-                                      Text(controller.productData!.tags[index]),
+                                      Text(controller.productData.tags[index]),
                                 );
                               },
                             )
                           ],
                         ),
                       ),
-                      textView(context, "Brand", controller.productData!.brand,
+                      textView(context, "Brand", controller.productData.brand,
                           top: 20),
+                      
                       textView(context, "Weight",
-                          controller.productData!.weight.toString()),
+                          controller.productData.weight.toString()),
                       textView(context, "Warranty",
-                          controller.productData!.warrantyInformation),
+                          controller.productData.warrantyInformation),
                       textView(context, "Shipping",
-                          controller.productData!.shippingInformation),
+                          controller.productData.shippingInformation),
                       textView(context, "Return Policy",
-                          controller.productData!.returnPolicy),
+                          controller.productData.returnPolicy),
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -265,8 +284,7 @@ class ProductDetail extends StatelessWidget {
                                       color: Theme.of(context).primaryColor,
                                     ),
                                     Text(
-                                      controller
-                                          .productData!.dimensions["width"]
+                                      controller.productData.dimensions["width"]
                                           .toString(),
                                       style: TextStyle(
                                         fontFamily: "Poppins",
@@ -294,7 +312,7 @@ class ProductDetail extends StatelessWidget {
                                     ),
                                     Text(
                                       controller
-                                          .productData!.dimensions["height"]
+                                          .productData.dimensions["height"]
                                           .toString(),
                                       style: TextStyle(
                                         fontFamily: "Poppins",
@@ -321,8 +339,7 @@ class ProductDetail extends StatelessWidget {
                                       color: Theme.of(context).primaryColor,
                                     ),
                                     Text(
-                                      controller
-                                          .productData!.dimensions["depth"]
+                                      controller.productData.dimensions["depth"]
                                           .toString(),
                                       style: TextStyle(
                                         fontFamily: "Poppins",
@@ -373,7 +390,7 @@ class ProductDetail extends StatelessWidget {
                           ],
                         ),
                         child: PageView.builder(
-                          itemCount: controller.productData!.reviews.length,
+                          itemCount: controller.productData.reviews.length,
                           itemBuilder: (context, index) {
                             return Container(
                               padding: const EdgeInsets.symmetric(
@@ -386,7 +403,7 @@ class ProductDetail extends StatelessWidget {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        controller.productData!
+                                        controller.productData
                                             .reviews[index]["reviewerName"]
                                             .toString(),
                                         style: TextStyle(
@@ -410,7 +427,7 @@ class ProductDetail extends StatelessWidget {
                                         ],
                                       ),
                                       Text(
-                                        controller.productData!
+                                        controller.productData
                                             .reviews[index]["rating"]
                                             .toString(),
                                         style: TextStyle(
@@ -423,7 +440,7 @@ class ProductDetail extends StatelessWidget {
                                     ],
                                   ),
                                   Text(
-                                    controller.productData!
+                                    controller.productData
                                         .reviews[index]["reviewerEmail"]
                                         .toString(),
                                     style: TextStyle(
@@ -438,7 +455,7 @@ class ProductDetail extends StatelessWidget {
                                   ),
                                   Text(
                                     controller
-                                        .productData!.reviews[index]["comment"]
+                                        .productData.reviews[index]["comment"]
                                         .toString(),
                                     style: TextStyle(
                                       color: Theme.of(context).primaryColor,
@@ -450,10 +467,10 @@ class ProductDetail extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.bottomRight,
                                     child: Text(
-                                      "${DateTime.parse(controller.productData!.reviews[index]["date"]).day}-${DateTime.parse(controller.productData!.reviews[index]["date"]).month}-${DateTime.parse(controller.productData!.reviews[index]["date"]).year}",
+                                      "${DateTime.parse(controller.productData.reviews[index]["date"]).day}-${DateTime.parse(controller.productData.reviews[index]["date"]).month}-${DateTime.parse(controller.productData.reviews[index]["date"]).year}",
                                       style: TextStyle(
                                         color: Theme.of(context).primaryColor,
-                                        fontSize: 15,
+                                        fontSize: 10,
                                         fontFamily: "Poppins",
                                         fontWeight: FontWeight.normal,
                                       ),
@@ -471,9 +488,11 @@ class ProductDetail extends StatelessWidget {
                         margin: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 20),
                         child: ElevatedButton.icon(
-                          onPressed: controller.isAddCart ? null : () {
-                            controller.addToCart();
-                          },
+                          onPressed: controller.isAddCart
+                              ? null
+                              : () {
+                                  controller.addToCart();
+                                },
                           style: ButtonStyle(
                             backgroundColor:
                                 const WidgetStatePropertyAll(Colors.indigo),
@@ -509,12 +528,16 @@ class ProductDetail extends StatelessWidget {
                           },
                           style: ButtonStyle(
                             backgroundColor: WidgetStatePropertyAll(
-                              controller.isWishList ? Colors.redAccent : Colors.transparent),
+                                controller.isWishList
+                                    ? Colors.redAccent
+                                    : Colors.transparent),
                             shape: WidgetStatePropertyAll(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 side: BorderSide(
-                                  color: controller.isWishList ? Colors.white : Theme.of(context).primaryColor,
+                                  color: controller.isWishList
+                                      ? Colors.white
+                                      : Theme.of(context).primaryColor,
                                   width: 2,
                                 ),
                               ),
@@ -529,9 +552,13 @@ class ProductDetail extends StatelessWidget {
                                 : Theme.of(context).primaryColor,
                           ),
                           label: Text(
-                            controller.isWishList ? "Remove from Wishlist" : "Add to Wishlist",
+                            controller.isWishList
+                                ? "Remove from Wishlist"
+                                : "Add to Wishlist",
                             style: TextStyle(
-                              color: controller.isWishList ? Colors.white : Theme.of(context).primaryColor,
+                              color: controller.isWishList
+                                  ? Colors.white
+                                  : Theme.of(context).primaryColor,
                               fontSize: 15,
                               fontFamily: "Poppins",
                               fontWeight: FontWeight.bold,

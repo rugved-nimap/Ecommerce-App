@@ -37,7 +37,8 @@ class SearchPageController extends GetxController {
       const Duration(seconds: 1),
       () async {
         if (textEditingController.text.isNotEmpty) {
-          searchList = await _dataFetchRepo.fetchData("products/search?q=$query");
+          searchList =
+              await _dataFetchRepo.fetchData("products/search?q=$query");
         } else {
           searchList.clear();
           print("clear");
@@ -52,8 +53,6 @@ class SearchPageController extends GetxController {
     try {
       categorySearchList =
           await _dataFetchRepo.fetchData("products/category/$slugs");
-      print(categorySearchList[0].title);
-
     } catch (e) {
       print(e);
     }

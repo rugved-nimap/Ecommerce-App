@@ -11,7 +11,6 @@ class HomeController extends GetxController {
   int currentPageIndex = 0;
   PageController pageController = PageController();
   bool isDarkMode = false;
-  int selectedProductId = 0;
 
   final DataFetchRepo _dataFetchRepo = DataFetchRepo();
   final DatabaseService _databaseService = DatabaseService.instance;
@@ -20,7 +19,6 @@ class HomeController extends GetxController {
 
   List<Productmodel> wisListProducts = [];
   List<Productmodel> shoppingProducts = [];
-  // bool isWishList = false;
 
   @override
   void onInit() {
@@ -57,19 +55,19 @@ class HomeController extends GetxController {
     update();
   }
 
-  void addToWishList(int index) async {
-    bool isInWishList = isWishList(index);
+  void addToWishList(int index, List<Productmodel> list) async {
+    bool isInWishList = isWishList(index, list);
 
     if (isInWishList) {
-      wisListProducts.remove(productData[index]);
+      wisListProducts.removeWhere((element) => element.id == list[index].id);
     } else {
-      wisListProducts.add(productData[index]);
+      wisListProducts.add(list[index]);
     }
     update();
   }
 
-  bool isWishList(int index) {
-    return wisListProducts.any((product) => product.id == productData[index].id);
+  bool isWishList(int index, List<Productmodel> list) {
+    return wisListProducts.any((product) => product.id == list[index].id);
   }
 
 

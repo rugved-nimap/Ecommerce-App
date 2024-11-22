@@ -10,7 +10,9 @@ class ListItemsTile extends StatelessWidget {
   final String description;
   final double price;
   final int id;
-  final int index;
+  final bool isWishlist;
+  final VoidCallback add;
+  final VoidCallback back;
 
   const ListItemsTile({
     super.key,
@@ -19,7 +21,9 @@ class ListItemsTile extends StatelessWidget {
     required this.description,
     required this.price,
     required this.id,
-    required this.index,
+    required this.isWishlist,
+    required this.add,
+    required this.back,
   });
 
   @override
@@ -30,12 +34,16 @@ class ListItemsTile extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       child: ElevatedButton(
         onPressed: () {
-          Get.find<HomeController>().selectedProductId = id;
           Get.to(
             const ProductDetail(),
             binding: ProductDetailBinder(),
             transition: Transition.zoom,
-          );
+            arguments: {
+              'id' : id,
+            },
+          )?.then((value) {
+            back();
+          });
         },
         style: ButtonStyle(
           shape: WidgetStatePropertyAll(
@@ -104,12 +112,10 @@ class ListItemsTile extends StatelessWidget {
             Flexible(
               flex: 1,
               child: IconButton(
-                onPressed: () {
-                  Get.find<HomeController>().addToWishList(index);
-                },
+                onPressed: add,
                 icon: Icon(
-                  Get.find<HomeController>().isWishList(index) ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-                  color: Get.find<HomeController>().isWishList(index) ? Colors.redAccent : Theme.of(context).primaryColor,
+                  isWishlist ? Icons.favorite_rounded : Icons.favorite_border_rounded,
+                  color: isWishlist ? Colors.redAccent : Theme.of(context).primaryColor,
                 ),
               ),
             ),

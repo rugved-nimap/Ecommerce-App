@@ -35,7 +35,13 @@ class WishlistPage extends StatelessWidget {
                     description: controller.wisListProducts[index].description,
                     price: controller.wisListProducts[index].price,
                     id: controller.wisListProducts[index].id,
-                    index: index,
+                    isWishlist: controller.isWishList(index, controller.wisListProducts),
+                    add: () {
+                      controller.addToWishList(index, controller.wisListProducts);
+                    },
+                    back: () {
+                      controller.update();
+                    },
                   );
                 },
               ),

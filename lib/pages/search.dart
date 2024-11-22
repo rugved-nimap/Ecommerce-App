@@ -1,3 +1,4 @@
+import 'package:ecommerce/controllers/home_controller.dart';
 import 'package:ecommerce/controllers/search_page_controller.dart';
 import 'package:ecommerce/tiles/list_items_tile.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +77,14 @@ class Search extends StatelessWidget {
                       description: controller.searchList[index].description,
                       price: controller.searchList[index].price,
                       id: controller.searchList[index].id,
-                      index: index,
+                      isWishlist: Get.find<HomeController>().isWishList(index, controller.searchList),
+                      add: () {
+                        Get.find<HomeController>().addToWishList(index, controller.searchList);
+                        controller.update();
+                      },
+                      back: () {
+                        controller.update();
+                      },
                     );
                   },
                 )
@@ -89,8 +97,15 @@ class Search extends StatelessWidget {
                       title: controller.categorySearchList[index].title,
                       description: controller.categorySearchList[index].description,
                       price: controller.categorySearchList[index].price,
-                      id: controller.searchList[index].id,
-                      index: index,
+                      id: controller.categorySearchList[index].id,
+                      isWishlist: Get.find<HomeController>().isWishList(index, controller.categorySearchList),
+                      add: () {
+                        Get.find<HomeController>().addToWishList(index, controller.categorySearchList);
+                        controller.update();
+                      },
+                      back: () {
+                        controller.update();
+                      },
                     );
                   },
                 )
