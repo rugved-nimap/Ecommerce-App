@@ -23,7 +23,8 @@ class SignupPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 15, right: 15, top: 20),
+                      padding:
+                          const EdgeInsets.only(left: 15, right: 15, top: 20),
                       child: Text(
                         'Create an\naccount',
                         style: TextStyle(
@@ -42,6 +43,7 @@ class SignupPage extends StatelessWidget {
                         hint: "Email",
                         icon: Icons.person_outline_rounded,
                         isPassword: false,
+                        editingController: controller.signupEmail,
                       ),
                     ),
                     Padding(
@@ -51,6 +53,7 @@ class SignupPage extends StatelessWidget {
                         hint: "Password",
                         icon: Icons.lock_outlined,
                         isPassword: true,
+                        editingController: controller.signupPass,
                       ),
                     ),
                     Padding(
@@ -61,6 +64,7 @@ class SignupPage extends StatelessWidget {
                         hint: "Confirm Password",
                         icon: Icons.lock_outlined,
                         isPassword: true,
+                        editingController: controller.signupPass,
                       ),
                     ),
                     const Padding(
@@ -81,7 +85,9 @@ class SignupPage extends StatelessWidget {
                         width: double.infinity,
                         height: 55,
                         child: FilledButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            controller.signup();
+                          },
                           style: ButtonStyle(
                             shape: WidgetStatePropertyAll(
                               RoundedRectangleBorder(

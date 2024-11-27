@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "205518465944",
+    "project_id": "rugved-ecommerce",
+    "storage_bucket": "rugved-ecommerce.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:205518465944:android:e22c77e397a9a22a8a59ed",
+        "android_client_info": {
+          "package_name": "com.example.ecommerce"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvp6ieRsiCYgy2F8Au9oXtL-pO0W06TD0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

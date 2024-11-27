@@ -45,5 +45,20 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>https</string>
+            </array>
+        </dict>
+    </array>
+
+    <key>AssociatedDomains</key>
+    <array>
+        <string>applinks:www.rugved-ecommerce.com</string>
+    </array>
+
 </dict>
 </plist>

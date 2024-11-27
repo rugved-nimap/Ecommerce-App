@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecommerce/binders/search_binder.dart';
 import 'package:ecommerce/controllers/home_controller.dart';
 import 'package:ecommerce/pages/add_to_cart.dart';
@@ -106,26 +107,36 @@ class HomePage extends StatelessWidget {
                           color: Theme.of(context).hintColor),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 15),
-                    height: 175,
-                    width: double.infinity,
-                    child: PageView.builder(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: CarouselSlider.builder(
                       itemCount: 4,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (context, index, realIndex) {
                         return Container(
-                          margin: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: BorderRadius.circular(25),
                             image: DecorationImage(
                               image:
-                                  AssetImage('assets/images/${index + 1}.jpg'),
+                              AssetImage('assets/images/${index + 1}.jpg'),
                               fit: BoxFit.cover,
                             ),
                           ),
                         );
                       },
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        initialPage: 0,
+                        height: 175,
+                        enlargeFactor: 1,
+                        enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+                        viewportFraction: 1,
+                        disableCenter: true,
+                        enlargeCenterPage: true,
+                        pauseAutoPlayOnTouch: true,
+                        enableInfiniteScroll: true,
+                        pageSnapping: true,
+                      ),
                     ),
                   ),
                   if (controller.productData.isNotEmpty) ...{

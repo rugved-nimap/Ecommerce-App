@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../controllers/auth_controller.dart';
 
+
 class TextfieldWidget extends StatelessWidget {
   AuthController controller;
   String hint;
   IconData icon;
   bool isPassword;
+  TextEditingController editingController;
 
   TextfieldWidget({
     super.key,
@@ -14,11 +16,13 @@ class TextfieldWidget extends StatelessWidget {
     required this.hint,
     required this.icon,
     required this.isPassword,
+    required this.editingController,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: editingController,
       obscureText: isPassword ? controller.isObscure : false,
       decoration: InputDecoration(
         border: const OutlineInputBorder(

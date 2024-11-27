@@ -1,8 +1,6 @@
 import 'package:ecommerce/binders/auth_binder.dart';
-import 'package:ecommerce/binders/home_binder.dart';
 import 'package:ecommerce/controllers/auth_controller.dart';
 import 'package:ecommerce/pages/auth_pages/signup_page.dart';
-import 'package:ecommerce/pages/home.dart';
 import 'package:ecommerce/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,6 +42,7 @@ class LoginPage extends StatelessWidget {
                     hint: "Email",
                     icon: Icons.person_outline_rounded,
                     isPassword: false,
+                    editingController: controller.loginEmail,
                   ),
                 ),
                 Padding(
@@ -58,6 +57,7 @@ class LoginPage extends StatelessWidget {
                     hint: "Password",
                     icon: Icons.lock_outlined,
                     isPassword: true,
+                    editingController: controller.loginPas,
                   ),
                 ),
                 Align(
@@ -81,8 +81,9 @@ class LoginPage extends StatelessWidget {
                     width: double.infinity,
                     height: 55,
                     child: FilledButton(
-                      onPressed: () =>
-                          Get.to(const Home(), binding: HomeBinder()),
+                      onPressed: () {
+                        controller.login();
+                      },
                       style: ButtonStyle(
                         shape: WidgetStatePropertyAll(
                           RoundedRectangleBorder(

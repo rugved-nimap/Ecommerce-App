@@ -39,7 +39,7 @@ class ListItemsTile extends StatelessWidget {
             binding: ProductDetailBinder(),
             transition: Transition.zoom,
             arguments: {
-              'id' : id,
+              'id' : id.toString(),
             },
           )?.then((value) {
             back();

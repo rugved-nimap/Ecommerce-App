@@ -24,7 +24,7 @@ class ProductDetailController extends GetxController {
     super.onInit();
   }
 
-  void getDataOfProduct(int id) async {
+  void getDataOfProduct(String id) async {
     isLoading = true;
     try {
       productData = (await _dataFetchRepo.fetchProductDetails("products/$id"))!;
