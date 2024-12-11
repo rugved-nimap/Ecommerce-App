@@ -1,4 +1,6 @@
 import 'package:ecommerce/controllers/home_controller.dart';
+import 'package:ecommerce/pages/splash_screens/landing_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -121,6 +123,44 @@ class SettingPage extends StatelessWidget {
                   ),
                   child: Text(
                     'Privacy and Policy',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontFamily: "Poppins",
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: double.infinity,
+                height: 100,
+                child: ElevatedButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut().then(
+                      (value) {
+                        Get.offAllNamed("/");
+                      },
+                    );
+                  },
+                  style: ButtonStyle(
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
+                    elevation: const WidgetStatePropertyAll(5),
+                    backgroundColor:
+                        WidgetStatePropertyAll(Theme.of(context).cardColor),
+                    padding: const WidgetStatePropertyAll(EdgeInsets.zero),
+                    overlayColor: WidgetStatePropertyAll(
+                      Colors.blueAccent.withOpacity(0.05),
+                    ),
+                  ),
+                  child: Text(
+                    'Logout',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontFamily: "Poppins",

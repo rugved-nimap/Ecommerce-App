@@ -27,24 +27,75 @@ class AuthController extends GetxController {
       )
           .then(
         (value) {
-          Get.snackbar(
-            "Account Login Successfully",
-            "Email: ${value.user?.email}\nUID: ${value.user?.uid}",
-            duration: const Duration(seconds: 1),
-            backgroundColor: Colors.green,
-            colorText: Colors.white,
-            snackPosition: SnackPosition.BOTTOM,
-            isDismissible: false,
-            icon: const Icon(
-              Icons.check_circle_outline_rounded,
-              color: Colors.white,
+          Get.showSnackbar(
+            GetSnackBar(
+              titleText: const Text(
+                "User has Successfully Login",
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              margin: const EdgeInsets.all(10),
+              borderRadius: 20,
+              borderWidth: 2,
+              borderColor: Colors.white,
+              message: "Welcome! ${_auth.currentUser?.displayName}",
+              snackStyle: SnackStyle.FLOATING,
+              duration: const Duration(seconds: 1),
+              // backgroundColor: Colors.green,
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundGradient: LinearGradient(
+                colors: [Colors.lightGreen, Colors.green.shade700],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              isDismissible: false,
+              icon: const Icon(
+                Icons.check_circle_outline_rounded,
+                color: Colors.white,
+              ),
             ),
           );
           Get.to(const Home(), binding: HomeBinder());
         },
       );
     } catch (e) {
-      Get.snackbar("Error Login !!", "$e");
+      Get.showSnackbar(
+        GetSnackBar(
+          titleText: const Text(
+            "Couldn't Login to Account !!",
+            style: TextStyle(
+              fontFamily: "Poppins",
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          message: "$e",
+          margin: const EdgeInsets.all(10),
+          borderRadius: 20,
+          borderWidth: 2,
+          borderColor: Colors.white,
+          snackStyle: SnackStyle.FLOATING,
+          duration: const Duration(seconds: 1),
+          // backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundGradient: LinearGradient(
+            colors: [Colors.red, Colors.red.shade900],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          isDismissible: false,
+          icon: const Icon(
+            Icons.warning_amber_rounded,
+            size: 40,
+            color: Colors.amber,
+          ),
+        ),
+      );
     }
   }
 
@@ -57,24 +108,75 @@ class AuthController extends GetxController {
       )
           .then(
         (value) {
-          Get.snackbar(
-            "Account Created Successfully",
-            "Email: ${value.user?.email}\nUID: ${value.user?.uid}",
-            duration: const Duration(seconds: 1),
-            backgroundColor: Colors.green,
-            colorText: Colors.white,
-            snackPosition: SnackPosition.BOTTOM,
-            isDismissible: false,
-            icon: const Icon(
-              Icons.check_circle_outline_rounded,
-              color: Colors.white,
+          Get.showSnackbar(
+            GetSnackBar(
+              titleText: const Text(
+                "Account Created Successfully",
+                style: TextStyle(
+                  fontFamily: "Poppins",
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              margin: const EdgeInsets.all(10),
+              borderRadius: 20,
+              borderWidth: 2,
+              borderColor: Colors.white,
+              message: "Welcome! ${_auth.currentUser?.displayName}",
+              snackStyle: SnackStyle.FLOATING,
+              duration: const Duration(seconds: 1),
+              // backgroundColor: Colors.green,
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundGradient: LinearGradient(
+                colors: [Colors.lightGreen, Colors.green.shade700],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              isDismissible: false,
+              icon: const Icon(
+                Icons.check_circle_outline_rounded,
+                color: Colors.white,
+              ),
             ),
           );
           Get.to(const Home(), binding: HomeBinder());
         },
       );
     } catch (e) {
-      Get.snackbar("Error Creating an Account !!", "$e");
+      Get.showSnackbar(
+        GetSnackBar(
+          titleText: const Text(
+            "Error Creating an Account !!",
+            style: TextStyle(
+              fontFamily: "Poppins",
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          message: "$e",
+          margin: const EdgeInsets.all(10),
+          borderRadius: 20,
+          borderWidth: 2,
+          borderColor: Colors.white,
+          snackStyle: SnackStyle.FLOATING,
+          duration: const Duration(seconds: 1),
+          // backgroundColor: Colors.green,
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundGradient: LinearGradient(
+            colors: [Colors.red, Colors.red.shade900],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          isDismissible: false,
+          icon: const Icon(
+            Icons.warning_amber_rounded,
+            size: 40,
+            color: Colors.amber,
+          ),
+        ),
+      );
     }
   }
 

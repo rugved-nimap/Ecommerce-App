@@ -53,7 +53,10 @@ class ProductDetailController extends GetxController {
     } else {
       _controller.shoppingProducts.removeWhere((element) => element.id == productData.id);
     }
-    print("${_controller.shoppingProducts[0].title}");
+    _controller.updateMapList();
+    debugPrint(_controller.shoppingProducts[0].title);
     update();
   }
+
+
 }

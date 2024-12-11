@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../controllers/auth_controller.dart';
 
-
 class TextfieldWidget extends StatelessWidget {
   AuthController controller;
   String hint;
@@ -28,6 +27,15 @@ class TextfieldWidget extends StatelessWidget {
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(10),
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+          borderSide: BorderSide(
+            width: 2,
+            color: Color(0xffF83758),
           ),
         ),
         prefixIcon: Icon(icon),

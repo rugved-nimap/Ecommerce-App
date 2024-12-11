@@ -182,7 +182,8 @@ class ProductDetail extends StatelessWidget {
                             Text(
                               "\$${(controller.productData.price / (1 - controller.productData.discountPercentage / 100)).toStringAsFixed(2)}",
                               style: TextStyle(
-                                  color: Theme.of(context).primaryColorDark,
+                                  color: (Theme.of(context).primaryColor)
+                                      .withOpacity(0.5),
                                   fontSize: 22,
                                   fontFamily: "Poppins",
                                   fontWeight: FontWeight.normal,
@@ -199,7 +200,10 @@ class ProductDetail extends StatelessWidget {
                           children: [
                             Container(
                               padding: const EdgeInsets.only(
-                                  left: 10, top: 5, bottom: 5),
+                                left: 10,
+                                top: 5,
+                                bottom: 5,
+                              ),
                               child: Text(
                                 "Tags: ",
                                 style: TextStyle(
@@ -213,14 +217,21 @@ class ProductDetail extends StatelessWidget {
                               (index) {
                                 return Container(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 5),
+                                    horizontal: 10,
+                                    vertical: 5,
+                                  ),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color:
-                                        Colors.grey.shade800.withOpacity(0.25),
+                                    color: Theme.of(context).cardColor,
                                   ),
-                                  child:
-                                      Text(controller.productData.tags[index]),
+                                  child: Text(
+                                    controller.productData.tags[index],
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(1),
+                                    ),
+                                  ),
                                 );
                               },
                             )
@@ -229,7 +240,6 @@ class ProductDetail extends StatelessWidget {
                       ),
                       textView(context, "Brand", controller.productData.brand,
                           top: 20),
-                      
                       textView(context, "Weight",
                           controller.productData.weight.toString()),
                       textView(context, "Warranty",

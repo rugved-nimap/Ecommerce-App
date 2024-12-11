@@ -1,3 +1,4 @@
+import 'package:ecommerce/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -34,28 +35,39 @@ class AddToCart extends StatelessWidget {
                         fontFamily: "Poppins",
                         fontWeight: FontWeight.bold,
                       ),
-
                     ),
                   ],
                 ),
               ),
               Container(
-                color: Colors.grey.shade200,
+                color: Theme.of(context).cardColor,
                 height: 400,
+                margin: const EdgeInsets.symmetric(vertical: 2.5),
                 child: ListView.builder(
-                  itemCount: controller.shoppingProducts.length,
+                  itemCount: controller.cartMap.entries.length,
                   itemBuilder: (context, index) {
                     return Container(
                       width: double.infinity,
-                      height: 75,
-                      color: Theme.of(context).cardColor,
-                      margin: const EdgeInsets.symmetric(vertical: 2),
+                      height: 85,
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        border: Border.symmetric(
+                          horizontal: BorderSide(
+                            width: 1,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                          ),
+                        ),
+                      ),
                       child: Row(
                         children: [
                           Expanded(
                             flex: 2,
                             child: Image.network(
-                              controller.shoppingProducts[index].thumbnail,
+                              controller.cartMap.entries
+                                  .elementAt(index)
+                                  .key
+                                  .thumbnail,
                             ),
                           ),
                           Expanded(
@@ -65,7 +77,10 @@ class AddToCart extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  controller.shoppingProducts[index].title,
+                                  controller.cartMap.entries
+                                      .elementAt(index)
+                                      .key
+                                      .title,
                                   style: TextStyle(
                                     fontFamily: "Poppins",
                                     color: Theme.of(context).primaryColor,
@@ -74,8 +89,7 @@ class AddToCart extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  controller.shoppingProducts[index].price
-                                      .toString(),
+                                  "\$ ${controller.cartMap.entries.elementAt(index).key.price}",
                                   style: TextStyle(
                                     fontFamily: "Poppins",
                                     color: Theme.of(context).primaryColor,
@@ -104,17 +118,26 @@ class AddToCart extends StatelessWidget {
                                 ),
                                 Container(
                                   height: 30,
-                                  width: 75,
+                                  width: 80,
                                   decoration: BoxDecoration(
-                                    color: Colors.lightGreenAccent.shade100,
+                                    color: Colors.lightGreenAccent.shade100
+                                        .withOpacity(0.25),
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(color: Colors.green),
                                   ),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 2),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       InkWell(
+                                        onTap: () {
+                                          controller.removeFromShoppingCart(
+                                              controller.cartMap.entries
+                                                  .elementAt(index)
+                                                  .key);
+                                        },
                                         child: Icon(
                                           Icons.remove,
                                           color: Theme.of(context).primaryColor,
@@ -122,7 +145,7 @@ class AddToCart extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        "1",
+                                        "${controller.cartMap.entries.elementAt(index).value}",
                                         style: TextStyle(
                                           fontFamily: "Poppins",
                                           color: Theme.of(context).primaryColor,
@@ -132,6 +155,12 @@ class AddToCart extends StatelessWidget {
                                         ),
                                       ),
                                       InkWell(
+                                        onTap: () {
+                                          controller.addInShoppingCart(
+                                              controller.cartMap.entries
+                                                  .elementAt(index)
+                                                  .key);
+                                        },
                                         child: Icon(
                                           Icons.add,
                                           color: Theme.of(context).primaryColor,
@@ -155,22 +184,292 @@ class AddToCart extends StatelessWidget {
                 "Address",
                 "User Address",
                 Icons.maps_home_work_outlined,
-                () {},
+                () {
+                  Get.bottomSheet(
+                    SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.only(left: 20, top: 35),
+                              child: Text.rich(
+                                const TextSpan(children: [
+                                  TextSpan(
+                                    text: "Choose\n",
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: "Location",
+                                    style: TextStyle(
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                ]),
+                                style: TextStyle(
+                                  fontFamily: "Poppins",
+                                  color: Theme.of(context).primaryColor,
+                                  overflow: TextOverflow.ellipsis,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )),
+                          Container(
+                            width: double.infinity,
+                            height: 55,
+                            margin: const EdgeInsets.all(20),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ButtonStyle(
+                                backgroundColor: const WidgetStatePropertyAll(
+                                    Colors.redAccent),
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.location_on_rounded,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Location",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Poppins",
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: false
+                                ? ListView.builder(
+                                    itemBuilder: (context, index) {
+                                      return const Text("data");
+                                    },
+                                  )
+                                : Center(
+                                    child: Text(
+                                      "No Address Available",
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontFamily: "Poppins",
+                                        fontSize: 15,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                          )
+                        ],
+                      ),
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                    ),
+                    backgroundColor: Theme.of(context).cardColor,
+                  );
+                },
               ),
               buttons(
                 context,
                 "Payment Method",
-                "UPI",
+                controller.paymentMethod,
                 Icons.payment_outlined,
-                () {},
+                () {
+                  showMenu(
+                    context: context,
+                    position: RelativeRect.fromLTRB(
+                      double.infinity,
+                      MediaQuery.of(context).size.height - 250,
+                      0,
+                      0,
+                    ),
+                    items: [
+                      PopupMenuItem(
+                        value: "UPI",
+                        child: Text(
+                          "UPI",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 15,
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: "Credit / Debit Card",
+                        child: Text(
+                          "Credit / Debit Card",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 15,
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: "Net Banking",
+                        child: Text(
+                          "Net Banking",
+                          style: TextStyle(
+                            fontFamily: "Poppins",
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 15,
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                    elevation: 10,
+                    color: Theme.of(context).cardColor,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                    menuPadding: const EdgeInsets.all(10),
+                  ).then(
+                    (value) {
+                      if (value != null) {
+                        controller.paymentMethod = value;
+                        controller.update();
+                      }
+                    },
+                  );
+                },
               ),
-              // marginAll(10),
               buttons(
                 context,
                 "Referral Code",
                 "Refer Code : ",
                 Icons.airplane_ticket_outlined,
-                () {},
+                () {
+                  Get.bottomSheet(
+                    SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, top: 35),
+                            child: Text(
+                              "Referral",
+                              style: TextStyle(
+                                fontFamily: "Poppins",
+                                color: Theme.of(context).primaryColor,
+                                overflow: TextOverflow.ellipsis,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: TextFormField(
+                              // controller: editingController,
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
+                                focusedBorder: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                  borderSide: BorderSide(
+                                    width: 2,
+                                    color: Color(0xffF83758),
+                                  ),
+                                ),
+                                prefixIcon: const Icon(Icons.password_rounded),
+                                prefixIconColor: Colors.grey.shade600,
+                                hintText: "Enter Referral Code",
+                                hintStyle: const TextStyle(
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.grey),
+                                filled: true,
+                                fillColor:
+                                    const Color(0xffA8A8A9).withOpacity(0.25),
+                                contentPadding: const EdgeInsets.all(20),
+                              ),
+                              style: const TextStyle(
+                                fontFamily: "Montserrat",
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff676767),
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 55,
+                            margin: const EdgeInsets.all(20),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ButtonStyle(
+                                backgroundColor: const WidgetStatePropertyAll(
+                                  Colors.redAccent,
+                                ),
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                              ),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.verified_rounded,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Verify Referral",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: "Poppins",
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                    ),
+                    backgroundColor: Theme.of(context).cardColor,
+                  );
+                },
               ),
             ],
           ),
@@ -190,14 +489,14 @@ class AddToCart extends StatelessWidget {
                 ),
               ),
             ),
-            icon: Icon(
+            icon: const Icon(
               Icons.payment,
-              color: Theme.of(context).scaffoldBackgroundColor,
+              color: Colors.white,
             ),
-            label: Text(
+            label: const Text(
               "Purchase Order",
               style: TextStyle(
-                color: Theme.of(context).scaffoldBackgroundColor,
+                color: Colors.white,
                 fontSize: 17,
                 fontFamily: "Poppins",
                 fontWeight: FontWeight.bold,
@@ -222,7 +521,7 @@ class AddToCart extends StatelessWidget {
               borderRadius: BorderRadius.circular(0),
             ),
           ),
-          backgroundColor: const WidgetStatePropertyAll(Colors.white),
+          backgroundColor: WidgetStatePropertyAll(Theme.of(context).cardColor),
           overlayColor: WidgetStatePropertyAll(
             Colors.indigoAccent.shade100.withOpacity(0.25),
           ),

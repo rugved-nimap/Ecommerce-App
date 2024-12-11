@@ -10,7 +10,7 @@ class Themedata {
       primaryIconTheme: IconThemeData(color: Colors.grey.shade900),
       cardColor: Colors.white,
       hintColor: Colors.grey.shade700,
-      primaryColorDark: Colors.grey.shade500.withOpacity(0.5)
+      primaryColorDark: Colors.grey.shade500.withOpacity(0.5),
     );
   }
 
@@ -23,7 +23,7 @@ class Themedata {
       primaryIconTheme: const IconThemeData(color: Colors.white70),
       cardColor: Colors.grey.shade900,
       hintColor: Colors.white70,
-        primaryColorDark: Colors.grey.shade900
+      primaryColorDark: Colors.grey.shade900,
     );
   }
 }

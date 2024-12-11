@@ -2,6 +2,7 @@ import 'package:ecommerce/binders/home_binder.dart';
 import 'package:ecommerce/binders/product_detail_binder.dart';
 import 'package:ecommerce/pages/auth_pages/login_page.dart';
 import 'package:ecommerce/pages/auth_pages/signup_page.dart';
+import 'package:ecommerce/pages/home.dart';
 import 'package:ecommerce/pages/product_detail.dart';
 import 'package:ecommerce/pages/splash_screens/landing_page.dart';
 import 'package:ecommerce/pages/sub_pages/home_page.dart';
@@ -79,7 +80,7 @@ class _MyAppState extends State<MyApp> {
         '/' : (context) => const LandingPage(),
         '/login' : (context) => const LoginPage(),
         '/signup' : (context) => const SignupPage(),
-        '/home' : (context) => const HomePage(),
+        '/home' : (context) => const Home(),
         '/home/product' : (context) => const ProductDetail(),
       },
       // getPages: [

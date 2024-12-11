@@ -15,10 +15,14 @@ class HomeController extends GetxController {
   final DataFetchRepo _dataFetchRepo = DataFetchRepo();
   final DatabaseService _databaseService = DatabaseService.instance;
 
+  String paymentMethod = "UPI";
+
   List<Productmodel> productData = [];
 
   List<Productmodel> wisListProducts = [];
   List<Productmodel> shoppingProducts = [];
+
+  Map<Productmodel, int> cartMap = {};
 
   @override
   void onInit() {
@@ -81,5 +85,29 @@ class HomeController extends GetxController {
       _databaseService.database1,
       _databaseService.shoppingTableName,
     );
+  }
+
+
+  void removeFromShoppingCart(Productmodel product) {
+    shoppingProducts.remove(product);
+    updateMapList();
+    update();
+  }
+
+  void addInShoppingCart(Productmodel product) {
+    shoppingProducts.add(product);
+    updateMapList();
+    update();
+  }
+
+  void updateMapList() {
+    cartMap.clear();
+    for (var product in shoppingProducts) {
+      if (cartMap.containsKey(product)) {
+        cartMap[product] = cartMap[product]! + 1;
+      } else {
+        cartMap[product] = 1;
+      }
+    }
   }
 }
